@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+VoiceRecorder-Class: VoiceRecorder
+Main-Class: com.dangeol.voicerecorder.VoiceRecorder
+
