@@ -1,6 +1,7 @@
 package com.dangeol.voicerecorder;
 
 import com.dangeol.voicerecorder.utils.MessageUtil;
+import com.dangeol.voicerecorder.utils.UploadUtil;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.audio.AudioSendHandler;
@@ -10,6 +11,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 
 import javax.security.auth.login.LoginException;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
 import org.slf4j.Logger;
@@ -26,6 +28,7 @@ public class VoiceRecorder extends ListenerAdapter {
     public static void main(String[] args) {
         logger.info("Program started!");
         Dotenv dotenv = Dotenv.load();
+
         try {
             JDABuilder builder = new JDABuilder(AccountType.BOT);
             builder.setToken(dotenv.get("BOTTOKEN"));
@@ -65,13 +68,11 @@ public class VoiceRecorder extends ListenerAdapter {
         Member member = event.getMember();
         GuildVoiceState voiceState = member.getVoiceState();
         VoiceChannel channel = voiceState.getChannel();
-        if (channel != null) {
-            connectTo(channel);
-            messages.onConnectionMessage(channel, event.getChannel());
-        }
-        else {
+        if (channel == null) {
             messages.onUnknownChannelMessage(event.getChannel(), "your voice channel");
+            return;
         }
+        connectTo(channel, event.getChannel());
     }
 
     /**
@@ -96,20 +97,26 @@ public class VoiceRecorder extends ListenerAdapter {
             messages.onUnknownChannelMessage(textChannel, arg);
             return;
         }
-        connectTo(channel);
-        messages.onConnectionMessage(channel, textChannel);
+        connectTo(channel, textChannel);
     }
 
     /**
      * Connect to requested channel and start audio handler
-     * @param channel: The channel to connect to
+     * @param voiceChannel: The voiceChannel to connect to
+     * @param textChannel: The textChannel to write message to
      */
-    private void connectTo(VoiceChannel channel) {
-        Guild guild = channel.getGuild();
+    private void connectTo(VoiceChannel voiceChannel, TextChannel textChannel) {
+        Guild guild = voiceChannel.getGuild();
         AudioManager audioManager = guild.getAudioManager();
+        if (audioManager.isConnected() || audioManager.isAttemptingToConnect()) {
+            messages.onAlreadyConnectedMessage(textChannel, voiceChannel.getName());
+            return;
+        }
+        messages.onConnectionMessage(voiceChannel, textChannel);
         AudioHandler handler = new AudioHandler();
 
-        // Send initially some silence to circumvent a Discord bug which might already have been resolved
+        // Send initially a silent byte to circumvent a Discord bug which might have already been resolved
+        // See https://github.com/discordapp/discord-api-docs/issues/808#issuecomment-457962359
         audioManager.setSendingHandler(new AudioSendHandler() {
             @Override
             public boolean canProvide() {
@@ -124,7 +131,7 @@ public class VoiceRecorder extends ListenerAdapter {
         // Set the sending handler to our audio system
          audioManager.setSendingHandler(handler);
          audioManager.setReceivingHandler(handler);
-         audioManager.openAudioConnection(channel);
+         audioManager.openAudioConnection(voiceChannel);
     }
 
     /**
@@ -133,6 +140,7 @@ public class VoiceRecorder extends ListenerAdapter {
      */
     private void onStopCommand(GuildMessageReceivedEvent event) {
         VoiceChannel connectedChannel = event.getGuild().getSelfMember().getVoiceState().getChannel();
+        UploadUtil uploadutil = new UploadUtil();
         if(connectedChannel == null) {
             messages.onNotConnVoiceChMessage(event.getChannel());
             return;
@@ -140,5 +148,10 @@ public class VoiceRecorder extends ListenerAdapter {
 
         event.getGuild().getAudioManager().closeAudioConnection();
         messages.onDisconnectionMessage(event.getChannel());
+        try {
+            uploadutil.uploadMp3();
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+        }
     }
 }

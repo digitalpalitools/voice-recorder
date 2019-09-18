@@ -34,6 +34,17 @@ public class MessageUtil {
     }
 
     /**
+     * The Bot is already connected to and recording this Voice channel.
+     * @param channel: The message channel (text channel abstraction) to send failure information to
+     * @param comment: The information of this channel
+     */
+    public void onAlreadyConnectedMessage(MessageChannel channel, String comment) {
+        String msg = ":no_entry_sign: Already recording "+comment+" !";
+        channel.sendMessage(msg).queue();
+        logger.warn(msg);
+    }
+
+    /**
      * The Bot is not connected to any voice channel.
      * @param channel: The information of this channel
      */

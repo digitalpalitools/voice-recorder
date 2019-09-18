@@ -1,12 +1,17 @@
 # User-specific stuff
 .idea
 *.txt
+*.mp3
+mp3/
 
 # Generated files
 target/
+package-lock.json
 
 # Sensitive or high-churn files
 .env
+auth.json
+tokens/
 
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,

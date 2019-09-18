@@ -26,12 +26,12 @@ public class AudioHandler implements AudioSendHandler, AudioReceiveHandler {
     private final int outputStreamSize = 491520;
 
     /**
-     * Combine multiple user audio-streams into a single one and limit queue to 10 entries
+     * Combine multiple user audio-streams into a single one and limit queue to 100 entries
      * @return boolean
      */
     @Override
     public boolean canReceiveCombined() {
-        return queue.size() < 10;
+        return queue.size() < 100;
     }
 
     /**
@@ -79,7 +79,7 @@ public class AudioHandler implements AudioSendHandler, AudioReceiveHandler {
             mp3Encoder.encodePcmToMp3(data == null ? null : data);
             outputStream.reset();
         }
-        // For our purpose we don't need to return a ByteBuffer
+
         return dataPoll == null ? null : ByteBuffer.wrap(dataPoll);
     }
 

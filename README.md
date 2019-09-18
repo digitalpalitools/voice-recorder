@@ -23,8 +23,11 @@ The commands must be called from a voice channel.
 
 ## Credits
 
-- [nwaldispuehl's](https://github.com/nwaldispuehl) and [Hanns Holger Rutz'](https://github.com/Sciss) Native Java ports of the MP3 lame-3.98.4 library ([java-lame](https://github.com/nwaldispuehl/java-lame) and [jump3r](https://github.com/Sciss/jump3r)),
-based on [Ken Händel's](https://sourceforge.net/u/kenchis/profile/) 'jump3r - Java Unofficial MP3 EncodeR' project, GNU LGPL version 3.0.
+- [nwaldispuehl's](https://github.com/nwaldispuehl) and [Hanns Holger Rutz'](https://github.com/Sciss) Native Java ports 
+([java-lame](https://github.com/nwaldispuehl/java-lame) and [jump3r](https://github.com/Sciss/jump3r)) 
+of the [MP3 lame-3.98.4 library](https://svn.code.sf.net/p/lame/svn/trunk/lame),
+based on [Ken Händel's](https://sourceforge.net/u/kenchis/profile/) 'jump3r - Java Unofficial MP3 EncodeR' project; 
+**License: GNU LGPL version 3.0**.
 
 ## License
 

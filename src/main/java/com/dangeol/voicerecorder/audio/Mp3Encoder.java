@@ -20,7 +20,7 @@ public class Mp3Encoder {
     private final AudioFormat audioFormat = new AudioFormat(48000.0f, 16, 2,
             true, true);
     private final LameEncoder encoder = new LameEncoder(audioFormat, bitRate, channelMode, lameQuality, vbr);
-    private final String fileName = new SimpleDateFormat("yyyyMMddHHmmss'.mp3'").format(new Date());
+    private final String fileName = new SimpleDateFormat("'mp3/'yyyyMMddHHmmss'.mp3'").format(new Date());
 
     private static final Logger logger = LoggerFactory.getLogger(Mp3Encoder.class);
 
@@ -28,7 +28,7 @@ public class Mp3Encoder {
      * Encodes the pcm byte array stream to MP3
      * @param pcm: pcm byte array
      */
-    public void encodePcmToMp3(byte[] pcm) {
+    public String encodePcmToMp3(byte[] pcm) {
 
         try (OutputStream mp3 = new FileOutputStream(fileName, true)) {
 
@@ -45,5 +45,6 @@ public class Mp3Encoder {
         } catch (IOException | OutOfMemoryError e) {
             logger.error(e.getMessage());
         }
+        return fileName;
     }
 }
