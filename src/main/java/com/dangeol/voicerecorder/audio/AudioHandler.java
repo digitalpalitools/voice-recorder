@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 public class AudioHandler implements AudioSendHandler, AudioReceiveHandler {
     /*
     All methods in this class are called by JDA threads when resources are available/ready for processing.
-    This class is based on the following example:
+    See this example:
     https://github.com/DV8FromTheWorld/JDA/blob/master/src/examples/java/AudioEchoExample.java
     */
     private static final Logger logger = LoggerFactory.getLogger(AudioHandler.class);
