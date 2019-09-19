@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.audio.AudioSendHandler;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 
@@ -38,6 +39,7 @@ public class VoiceRecorder extends ListenerAdapter {
             JDABuilder builder = new JDABuilder(AccountType.BOT);
             builder.setToken(dotenv.get("BOTTOKEN"));
             builder.addEventListeners(new VoiceRecorder());
+            builder.setActivity(Activity.playing("https://github.com/dangeol/voice-recorder"));
             builder.build();
         } catch (LoginException e) {
             logger.error(e.getMessage());
@@ -77,7 +79,7 @@ public class VoiceRecorder extends ListenerAdapter {
             messages.onUnknownChannelMessage(event.getChannel(), "your voice channel");
             return;
         }
-        connectTo(channel, event.getChannel());
+        connectTo(channel, event);
     }
 
     /**
@@ -102,16 +104,17 @@ public class VoiceRecorder extends ListenerAdapter {
             messages.onUnknownChannelMessage(textChannel, arg);
             return;
         }
-        connectTo(channel, textChannel);
+        connectTo(channel, event);
     }
 
     /**
      * Connect to requested channel and start audio handler
      * @param voiceChannel: The voiceChannel to connect to
-     * @param textChannel: The textChannel to write message to
+     * @param event: GuildMessageReceivedEvent
      */
-    private void connectTo(VoiceChannel voiceChannel, TextChannel textChannel) {
+    private void connectTo(VoiceChannel voiceChannel, GuildMessageReceivedEvent event) {
         Guild guild = voiceChannel.getGuild();
+        TextChannel textChannel = event.getChannel();
         AudioManager audioManager = guild.getAudioManager();
         if (audioManager.isConnected() || audioManager.isAttemptingToConnect()) {
             messages.onAlreadyConnectedMessage(textChannel, voiceChannel.getName());
@@ -127,11 +130,11 @@ public class VoiceRecorder extends ListenerAdapter {
         sendSilentByte(audioManager);
 
         // Set the sending and receiving handler to our audio system
+        changeBotNickName(event, "[REC]");
         AudioHandler handler = new AudioHandler();
         audioManager.setSendingHandler(handler);
         audioManager.setReceivingHandler(handler);
         audioManager.openAudioConnection(voiceChannel);
-        playGong();
         messages.onConnectionMessage(voiceChannel, textChannel);
     }
 
@@ -142,11 +145,11 @@ public class VoiceRecorder extends ListenerAdapter {
     private void onStopCommand(GuildMessageReceivedEvent event) {
         VoiceChannel connectedChannel = event.getGuild().getSelfMember().getVoiceState().getChannel();
         UploadUtil uploadutil = new UploadUtil();
+        changeBotNickName(event, "");
         if(connectedChannel == null) {
             messages.onNotConnVoiceChMessage(event.getChannel());
             return;
         }
-
         event.getGuild().getAudioManager().closeAudioConnection();
         messages.onDisconnectionMessage(event.getChannel());
         try {
@@ -181,6 +184,21 @@ public class VoiceRecorder extends ListenerAdapter {
             sound.open(AudioSystem.getAudioInputStream(gongBurmese));
             sound.start();
         } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+    }
+
+    /**
+     * Add a prefix to the bot's nickname during recording
+     * @param event
+     * @param prefix
+     */
+    private void changeBotNickName(GuildMessageReceivedEvent event, String prefix) {
+        Member bot = event.getGuild().getSelfMember();
+        String botName = "VoiceRecorder";
+        try {
+            event.getGuild().modifyNickname(bot, prefix + botName).queue();
+        } catch (InsufficientPermissionException e) {
             logger.error(e.getMessage());
         }
     }

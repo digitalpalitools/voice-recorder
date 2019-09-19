@@ -13,7 +13,7 @@ public class MessageUtil {
      */
     public void disclaimerConsentMessage(VoiceChannel voiceChannel, TextChannel textChannel) {
         String msg = "```fix" + "\n" + "Recording of " + voiceChannel.getName() +
-                " will start after the bell sound in 10 seconds."
+                " will start in 10 seconds."
                 + "\n" + "By unmuting his microphone, the participant consents to an audio tape being made of this " +
                 "session and to this recording being uploaded to the internet. The purpose of this tape is sharing " +
                 "the Dhamma and information concerning Sirimangalo International with interested persons who can't " +
