@@ -36,8 +36,10 @@ public class UploadUtil {
      * @throws IOException
      */
     public void uploadMp3(TextChannel textChannel) throws IOException {
-        String fileName = getFileName();
-        File mp3File = new File("mp3/"+fileName);
+        String originalFileName = getFileName();
+        //final filename for the uploaded file:
+        String fileName = originalFileName.substring(0, 14)+"_"+textChannel.getName()+".mp3";
+        File mp3File = new File("mp3/"+originalFileName);
         Dotenv dotenv = Dotenv.load();
 
         try {

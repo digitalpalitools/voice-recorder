@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -113,13 +114,11 @@ public class Commands {
         }
         event.getGuild().getAudioManager().closeAudioConnection();
         messages.onDisconnectionMessage(event.getChannel());
-        /*
         try {
             uploadutil.uploadMp3(event.getChannel());
         } catch (IOException e) {
             logger.error(e.getMessage());
         }
-        */
     }
 
     /**
