@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 public class MessageUtil {
 
     /**
-     * Consent information message.
+     * Consent information message, trying to be compliant with the GDPR
      * @param voiceChannel: The voice channel we are connected to
      * @param textChannel: The message channel (text channel abstraction) to send information to
      */
@@ -17,7 +17,8 @@ public class MessageUtil {
                 + "\n" + "By unmuting his microphone, the participant consents to an audio tape being made of this " +
                 "session and to this recording being uploaded to the internet. The purpose of this tape is sharing " +
                 "the Dhamma and information concerning Sirimangalo International with interested persons who can't " +
-                "attend the meeting." + "\n" +  "```";
+                "attend the meeting. Any participant may initiate the deletion of a recording at any time by " +
+                "writing an E-Mail to ***REMOVED***." + "\n" +  "```";
         textChannel.sendMessage(msg).queue();
     }
 

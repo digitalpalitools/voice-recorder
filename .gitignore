@@ -5,6 +5,7 @@
 mp3/
 
 # Generated files
+logs/
 target/
 package-lock.json
 
