@@ -63,6 +63,15 @@ public class MessageUtil {
     }
 
     /**
+     * The Bot is not is not recording.
+     * @param channel: The message channel (text channel abstraction) to send information to
+     */
+    public void onNotRecordingMessage(MessageChannel channel) {
+        String msg = ":no_entry_sign: The Bot is not recording right now!";
+        channel.sendMessage(msg).queue();
+    }
+
+    /**
      * Disconnection confirmation message
      * @param channel: The message channel (text channel abstraction) to send information to
      */

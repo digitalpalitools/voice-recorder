@@ -1,5 +1,6 @@
 package com.dangeol.voicerecorder.utils;
 
+import com.dangeol.voicerecorder.VoiceRecorder;
 import com.dangeol.voicerecorder.listeners.UploadProgressListener;
 import com.dangeol.voicerecorder.services.ConnectDriveService;
 import com.google.api.client.googleapis.media.MediaHttpUploader;
@@ -21,8 +22,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import io.github.cdimascio.dotenv.Dotenv;
-
 public class UploadUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(UploadUtil.class);
@@ -37,10 +36,9 @@ public class UploadUtil {
      */
     public void uploadMp3(TextChannel textChannel) throws IOException {
         String originalFileName = getFileName();
-        //final filename for the uploaded file:
+        // Construct final filename for the uploaded file:
         String fileName = originalFileName.substring(0, 14)+"_"+textChannel.getName()+".mp3";
         File mp3File = new File("mp3/"+originalFileName);
-        Dotenv dotenv = Dotenv.load();
 
         try {
             Drive drive = connectDriveService.connect();
@@ -49,8 +47,8 @@ public class UploadUtil {
             InputStreamContent mediaContent = new InputStreamContent("audio/mpeg",
                     new BufferedInputStream(new FileInputStream(mp3File)));
             mediaContent.setLength(mp3File.length());
-            // Save the file in a shared folder whose ID is the value of "FOLDERID"
-            file.setParents(Collections.singletonList(dotenv.get("FOLDERID")));
+            // Save the file in a shared folder whose ID is the value of "upload_folder_id"
+            file.setParents(Collections.singletonList(VoiceRecorder.getEnvItem("upload_folder_id")));
             file.setName(fileName);
             Drive.Files.Create request = drive.files().create(file, mediaContent);
             MediaHttpUploader uploader = request.getMediaHttpUploader();
@@ -61,7 +59,9 @@ public class UploadUtil {
                 messages.onUploadComplete(textChannel, link);
                 Arrays.stream(new File("mp3").listFiles()).forEach(File::delete);
             };
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException fe) {
+            logger.error(fe.getMessage());
+        } catch (Exception e) {
             logger.error(e.getMessage());
         }
     }

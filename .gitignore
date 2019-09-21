@@ -10,9 +10,7 @@ target/
 package-lock.json
 
 # Sensitive or high-churn files
-.env
-auth.json
-tokens/
+env.json
 
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,

@@ -15,7 +15,7 @@ import java.util.Collections;
 public class ConnectDriveService {
     private static final HttpTransport httpTransport = new NetHttpTransport();
     private static final JacksonFactory jsonFactory = new JacksonFactory();
-    private static final String CREDENTIALS_FILE_PATH = "/auth.json";
+    private static final String CREDENTIALS_FILE_PATH = "/env.json";
 
     /**
      * Connects to Google Drive on behalf of a service account.

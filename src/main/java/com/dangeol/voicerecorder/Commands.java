@@ -104,14 +104,14 @@ public class Commands {
      * @param event
      */
     public void onStopCommand(GuildMessageReceivedEvent event) {
-        stopSchedulerService.cancelStopEvent();
         VoiceChannel connectedChannel = event.getGuild().getSelfMember().getVoiceState().getChannel();
-        UploadUtil uploadutil = new UploadUtil();
-        changeBotNickName(event, "");
         if(connectedChannel == null) {
-            messages.onNotConnVoiceChMessage(event.getChannel());
+            messages.onNotRecordingMessage(event.getChannel());
             return;
         }
+        stopSchedulerService.cancelStopEvent();
+        UploadUtil uploadutil = new UploadUtil();
+        changeBotNickName(event, "");
         event.getGuild().getAudioManager().closeAudioConnection();
         messages.onDisconnectionMessage(event.getChannel());
         try {
@@ -155,7 +155,7 @@ public class Commands {
      * @param event
      * @param prefix
      */
-    private void changeBotNickName(GuildMessageReceivedEvent event, String prefix) {
+    public void changeBotNickName(GuildMessageReceivedEvent event, String prefix) {
         Member bot = event.getGuild().getSelfMember();
         String botName = "VoiceRecorder";
         try {
