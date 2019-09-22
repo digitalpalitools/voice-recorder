@@ -31,7 +31,7 @@ public class AudioHandler implements AudioSendHandler, AudioReceiveHandler {
      */
     @Override
     public boolean canReceiveCombined() {
-        return queue.size() < 100;
+        return queue.size() < 200;
     }
 
     /**
@@ -80,7 +80,7 @@ public class AudioHandler implements AudioSendHandler, AudioReceiveHandler {
             outputStream.reset();
         }
 
-        return dataPoll == null ? null : ByteBuffer.wrap(dataPoll);
+        return null;
     }
 
     /**

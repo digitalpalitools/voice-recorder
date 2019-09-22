@@ -1,5 +1,6 @@
 package com.dangeol.voicerecorder;
 
+import com.dangeol.voicerecorder.utils.CreateDirFilesUtil;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.*;
@@ -13,11 +14,11 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class VoiceRecorder extends ListenerAdapter {
 
+    private static final CreateDirFilesUtil createDirFilesUtil = new CreateDirFilesUtil();
     private static final Logger logger = LoggerFactory.getLogger(VoiceRecorder.class);
     private static final Commands commands = new Commands();
 
@@ -29,6 +30,7 @@ public class VoiceRecorder extends ListenerAdapter {
             builder.addEventListeners(new VoiceRecorder());
             builder.setActivity(Activity.playing("https://github.com/dangeol/voice-recorder"));
             builder.build();
+
         } catch (LoginException le) {
             logger.error(le.getMessage());
         } catch (Exception e) {

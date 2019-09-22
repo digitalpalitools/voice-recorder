@@ -4,7 +4,6 @@ import com.dangeol.voicerecorder.audio.AudioHandler;
 import com.dangeol.voicerecorder.services.StopSchedulerService;
 import com.dangeol.voicerecorder.utils.MessageUtil;
 import com.dangeol.voicerecorder.utils.UploadUtil;
-import net.dv8tion.jda.api.audio.AudioSendHandler;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
@@ -12,11 +11,7 @@ import net.dv8tion.jda.api.managers.AudioManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import java.io.File;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -79,7 +74,6 @@ public class Commands {
             messages.onAlreadyConnectedMessage(textChannel, voiceChannel.getName());
             return;
         }
-        playSound();
         messages.disclaimerConsentMessage(voiceChannel, textChannel);
         try {
             TimeUnit.SECONDS.sleep(10);
@@ -87,7 +81,6 @@ public class Commands {
             Thread.currentThread().interrupt();
             logger.error(ie.getMessage());
         }
-        sendSilentByte(audioManager);
 
         // Set the sending and receiving handler to our audio system
         changeBotNickName(event, "[REC]");
@@ -117,35 +110,6 @@ public class Commands {
         try {
             uploadutil.uploadMp3(event.getChannel());
         } catch (IOException e) {
-            logger.error(e.getMessage());
-        }
-    }
-
-    /**
-     * Send initially a silent byte to circumvent a Discord bug which might have already been resolved
-     * See https://github.com/discordapp/discord-api-docs/issues/808#issuecomment-457962359
-     * @param audioManager
-     */
-    private void sendSilentByte(AudioManager audioManager) {
-        audioManager.setSendingHandler(new AudioSendHandler() {
-            @Override
-            public boolean canProvide() {
-                return false;
-            }
-            @Override
-            public ByteBuffer provide20MsAudio() {
-                return ByteBuffer.wrap(new byte[0]);
-            }
-        });
-    }
-
-    private void playSound() {
-        try {
-            File notifSound = new File("assets/420512__jfrecords__vmax-bells.wav");
-            Clip sound = AudioSystem.getClip();
-            sound.open(AudioSystem.getAudioInputStream(notifSound));
-            sound.start();
-        } catch (Exception e) {
             logger.error(e.getMessage());
         }
     }
