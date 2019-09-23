@@ -13,7 +13,7 @@ public class MessageUtil {
      * @param textChannel: The message channel (text channel abstraction) to send information to
      */
     public void disclaimerConsentMessage(VoiceChannel voiceChannel, TextChannel textChannel) throws Exception {
-        String email = VoiceRecorder.getEnvItem("upload_folder_id");
+        String email = VoiceRecorder.getEnvItem("contact_email");
         String msg = "```fix" + "\n" + "Recording of " + voiceChannel.getName() +
                 " will start in 10 seconds."
                 + "\n" + "By unmuting his microphone, the participant consents to an audio tape being made of this " +
