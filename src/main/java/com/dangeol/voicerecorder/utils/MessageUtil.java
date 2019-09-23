@@ -1,5 +1,6 @@
 package com.dangeol.voicerecorder.utils;
 
+import com.dangeol.voicerecorder.VoiceRecorder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
@@ -11,14 +12,15 @@ public class MessageUtil {
      * @param voiceChannel: The voice channel we are connected to
      * @param textChannel: The message channel (text channel abstraction) to send information to
      */
-    public void disclaimerConsentMessage(VoiceChannel voiceChannel, TextChannel textChannel) {
+    public void disclaimerConsentMessage(VoiceChannel voiceChannel, TextChannel textChannel) throws Exception {
+        String email = VoiceRecorder.getEnvItem("upload_folder_id");
         String msg = "```fix" + "\n" + "Recording of " + voiceChannel.getName() +
                 " will start in 10 seconds."
                 + "\n" + "By unmuting his microphone, the participant consents to an audio tape being made of this " +
                 "session and to this recording being uploaded to the internet. The purpose of this tape is sharing " +
                 "the Dhamma and information concerning Sirimangalo International with interested persons who can't " +
                 "attend the meeting. Any participant may initiate the deletion of a recording at any time by " +
-                "writing an E-Mail to ***REMOVED***." + "\n" +  "```";
+                "writing an E-Mail to " + email + "." + "\n" +  "```";
         textChannel.sendMessage(msg).queue();
     }
 
