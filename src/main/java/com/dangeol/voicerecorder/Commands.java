@@ -25,7 +25,7 @@ public class Commands {
      * Handle command without arguments.
      * @param event: The event for this command
      */
-    public void onRecordCommand(GuildMessageReceivedEvent event) {
+    public void onRecordCommand(GuildMessageReceivedEvent event) throws Exception {
         Member member = event.getMember();
         GuildVoiceState voiceState = member.getVoiceState();
         VoiceChannel channel = voiceState.getChannel();
@@ -42,7 +42,7 @@ public class Commands {
      * @param guild: The guild where its happening
      * @param arg: The input argument
      */
-    public void onRecordCommand(GuildMessageReceivedEvent event, Guild guild, String arg) {
+    public void onRecordCommand(GuildMessageReceivedEvent event, Guild guild, String arg) throws Exception {
         boolean isNumber = arg.matches("\\d+"); // This is a regular expression that ensures the input consists of digits
         VoiceChannel channel = null;
         if (isNumber) {
@@ -66,7 +66,7 @@ public class Commands {
      * @param voiceChannel: The voiceChannel to connect to
      * @param event: GuildMessageReceivedEvent
      */
-    public void connectTo(VoiceChannel voiceChannel, GuildMessageReceivedEvent event) {
+    public void connectTo(VoiceChannel voiceChannel, GuildMessageReceivedEvent event) throws Exception {
         Guild guild = voiceChannel.getGuild();
         TextChannel textChannel = event.getChannel();
         AudioManager audioManager = guild.getAudioManager();

@@ -52,9 +52,17 @@ public class VoiceRecorder extends ListenerAdapter {
 
         if (content.startsWith("!record ")) {
             String arg = content.substring("!record ".length());
-            commands.onRecordCommand(event, guild, arg);
+            try {
+                commands.onRecordCommand(event, guild, arg);
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+            }
         } else if (content.equals("!record")) {
-            commands.onRecordCommand(event);
+            try {
+                commands.onRecordCommand(event);
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+            }
         } else if (content.equals("!stop")) {
             commands.onStopCommand(event);
         }
