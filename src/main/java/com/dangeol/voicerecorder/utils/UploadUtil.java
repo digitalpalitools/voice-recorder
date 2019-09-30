@@ -59,8 +59,6 @@ public class UploadUtil {
                 messages.onUploadComplete(textChannel, link);
                 Arrays.stream(new File("mp3").listFiles()).forEach(File::delete);
             };
-        } catch (FileNotFoundException fe) {
-            logger.error(fe.getMessage());
         } catch (Exception e) {
             logger.error(e.getMessage());
         }

@@ -1,7 +1,7 @@
 package com.dangeol.voicerecorder;
 
 import com.dangeol.voicerecorder.audio.AudioHandler;
-import com.dangeol.voicerecorder.services.StopSchedulerService;
+import com.dangeol.voicerecorder.services.SchedulerService;
 import com.dangeol.voicerecorder.utils.MessageUtil;
 import com.dangeol.voicerecorder.utils.UploadUtil;
 import net.dv8tion.jda.api.entities.*;
@@ -19,7 +19,7 @@ public class Commands {
 
     private static final Logger logger = LoggerFactory.getLogger(VoiceRecorder.class);
     private static final MessageUtil messages = new MessageUtil();
-    private static final StopSchedulerService stopSchedulerService = new StopSchedulerService();
+    private static final SchedulerService stopSchedulerService = new SchedulerService();
 
     /**
      * Handle command without arguments.
@@ -82,8 +82,8 @@ public class Commands {
             logger.error(ie.getMessage());
         }
 
-        // Set the sending and receiving handler to our audio system
         changeBotNickName(event, "[REC]");
+        // Set the sending and receiving handler to our audio system
         AudioHandler handler = new AudioHandler();
         audioManager.setSendingHandler(handler);
         audioManager.setReceivingHandler(handler);

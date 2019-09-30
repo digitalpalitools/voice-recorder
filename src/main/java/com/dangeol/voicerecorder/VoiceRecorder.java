@@ -1,13 +1,13 @@
 package com.dangeol.voicerecorder;
 
+import com.dangeol.voicerecorder.services.SchedulerService;
 import com.dangeol.voicerecorder.utils.CreateDirFilesUtil;
 import net.dv8tion.jda.api.AccountType;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-
-import javax.security.auth.login.LoginException;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -28,11 +28,9 @@ public class VoiceRecorder extends ListenerAdapter {
             JDABuilder builder = new JDABuilder(AccountType.BOT);
             builder.setToken(getEnvItem("bot_token"));
             builder.addEventListeners(new VoiceRecorder());
-            builder.setActivity(Activity.playing("https://github.com/dangeol/voice-recorder"));
-            builder.build();
-
-        } catch (LoginException le) {
-            logger.error(le.getMessage());
+            JDA jda = builder.build();
+            SchedulerService schedulerService = new SchedulerService();
+            schedulerService.scheduleSetBotActivityEvent(jda);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
