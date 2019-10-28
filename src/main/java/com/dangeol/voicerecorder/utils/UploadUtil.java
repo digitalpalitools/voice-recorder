@@ -16,7 +16,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,7 +56,11 @@ public class UploadUtil {
             if (uploader.getProgress() == 1.0) {
                 String link = getLink(drive, fileName);
                 messages.onUploadComplete(textChannel, link);
-                Arrays.stream(new File("mp3").listFiles()).forEach(File::delete);
+                try {
+                    Files.deleteIfExists(Paths.get("mp3/"+originalFileName));
+                } catch(IOException e) {
+                    logger.error(e.getMessage());
+                }
             };
         } catch (Exception e) {
             logger.error(e.getMessage());
