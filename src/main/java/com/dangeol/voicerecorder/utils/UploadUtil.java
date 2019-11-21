@@ -39,12 +39,12 @@ public class UploadUtil {
         String fileName = originalFileName.substring(0, 14)+"_"+textChannel.getName()+".mp3";
         File mp3File = new File("mp3/"+originalFileName);
 
-        try {
+        try (FileInputStream fileInputStream = new FileInputStream(mp3File);
+             BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream)) {
             Drive drive = connectDriveService.connect();
             com.google.api.services.drive.model.File file = new com.google.api.services.drive.model.File();
             UploadProgressListener uploadProgressListener = new UploadProgressListener();
-            InputStreamContent mediaContent = new InputStreamContent("audio/mpeg",
-                    new BufferedInputStream(new FileInputStream(mp3File)));
+            InputStreamContent mediaContent = new InputStreamContent("audio/mpeg", bufferedInputStream );
             mediaContent.setLength(mp3File.length());
             // Save the file in a shared folder whose ID is the value of "upload_folder_id"
             file.setParents(Collections.singletonList(VoiceRecorder.getEnvItem("upload_folder_id")));
