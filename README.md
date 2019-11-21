@@ -14,8 +14,6 @@
 
 ## Commands
 
-The commands must be called from a voice channel.
-
 |                   Command                   |                                      Description                                              |
 |:--------------------------------------------|:----------------------------------------------------------------------------------------------|
 | `!record`                                   | Start recording the current channel. This command must be called from a voice channel.                |   
