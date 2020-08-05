@@ -26,7 +26,7 @@ public class AudioHandler implements AudioSendHandler, AudioReceiveHandler {
     private final int outputStreamSize = 491520;
 
     /**
-     * Combine multiple user audio-streams into a single one and limit queue to 100 entries
+     * Combine multiple user audio-streams into a single one and limit queue to 200 entries
      * @return boolean
      */
     @Override

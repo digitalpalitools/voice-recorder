@@ -8,6 +8,7 @@
 
 - [Commands](#commands)
 - [Credits](#credits)
+- [Configuration](#configuration)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -16,9 +17,9 @@
 
 |                   Command                   |                                      Description                                              |
 |:--------------------------------------------|:----------------------------------------------------------------------------------------------|
-| `!record`                                   | Start recording the current channel. This command must be called from a voice channel.                |   
-| `!record [voicechannel]`                    | Start recording a voice channel, where `[voicechannel]` is its name.                                                          |
-| `!stop`                                     | Stop recording.                                                            |
+| `!record`                                   | Start recording the current channel. This command must be called from a voice channel.        |   
+| `!record [voicechannel]`                    | Start recording a voice channel, where `[voicechannel]` is its name.                          |
+| `!stop`                                     | Stop recording.                                                                               |
 
 ## Credits
 
@@ -27,6 +28,10 @@
 of the [MP3 lame-3.98.4 library](https://svn.code.sf.net/p/lame/svn/trunk/lame),
 based on [Ken Händel's](https://sourceforge.net/u/kenchis/profile/) 'jump3r - Java Unofficial MP3 EncodeR' project; 
 **License: GNU LGPL version 3.0**.
+
+## Configuration
+
+For further technical details and troubleshooting notes, please click here [here](CONFIG.md).
 
 ## License
 
