@@ -1,4 +1,4 @@
-#Configuration & Troubleshooting
+# Configuration & Troubleshooting
 
 ## Introduction
 The Bot is deployed in a Docker container on a Virtual Machine (VM) instance using the following Google Cloud Platform hardware resources:
@@ -47,7 +47,7 @@ Start a Docker container that is driven from the image, and mount the volume “
 `docker run -p 88:7777 -d --name vr_vol --mount source=vr_app,target=/usr/app [image]`\
 The latest image is (August 2020): `b971f44adff1`
 
-##VM configuration
+## VM configuration
 The configuration of the VM should persist even after a shut down. Some configuration details are outlined below.
 - Docker version: 18.06.1-ce
 - A swap space of 1 GB has been allocated in the host. This should be verified by the following command: `sudo swapon --show`
