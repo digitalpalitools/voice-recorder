@@ -17,7 +17,8 @@
 
 |                   Command                   |                                      Description                                              |
 |:--------------------------------------------|:----------------------------------------------------------------------------------------------|
-| `!record`                                   | Start recording the current channel. This command must be called from a voice channel.        |   
+| `!record`                                   | Start recording the current channel. This command must be called from a voice channel.        |
+|                                             | (Note: As of 2020-11-08, this command is not working. Please use the following command syntax)|   
 | `!record [voicechannel]`                    | Start recording a voice channel, where `[voicechannel]` is its name.                          |
 | `!stop`                                     | Stop recording.                                                                               |
 

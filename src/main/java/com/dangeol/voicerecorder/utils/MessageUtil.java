@@ -65,6 +65,17 @@ public class MessageUtil {
     }
 
     /**
+     * Fix for !record not working (getVoiceState() is Null, Nov. 2020).
+     * @param channel: The message channel (text channel abstraction) to send information to
+     */
+    public void onRecordNotWorking(MessageChannel channel) {
+        String msg = ":no_entry_sign: Please use the following command:" + "\n" +
+                "`!record [VoiceChannel name]`, e.g.:" + "\n" +
+                "`!record dhamma_study_group`";
+        channel.sendMessage(msg).queue();
+    }
+
+    /**
      * The Bot is not is not recording.
      * @param channel: The message channel (text channel abstraction) to send information to
      */

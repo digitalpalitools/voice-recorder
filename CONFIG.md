@@ -9,9 +9,8 @@ Micro machine type with 0.2 vCPU and 0.6 GB of memory, backed by a shared physic
 
 ### Prerequisites
 
-- Being member of the voicerecorder gcloud project. As of 2020-08-04, these are:
+- Being member of the voicerecorder gcloud project. As of 2020-11-08, these are:
   - Chris: cxxxg@cxxxp.me (editor)
-  - Partho: pxxxs@lxxxe.com (editor)
   - Sebastian: sxxxl@pxxxo.de (editor)
   - Daniel: dxxx0@gxxxl.com (owner)
 
@@ -46,6 +45,9 @@ In the case of a shut down, the VM and subsequently the Docker container need to
 Start a Docker container that is driven from the image, and mount the volume “vr_app”:\
 `docker run -p 88:7777 -d --name vr_vol --mount source=vr_app,target=/usr/app [image]`\
 The latest image is (August 2020): `b971f44adff1`
+
+## Local development
+Please put the following JAR-file in your JAVA class path: `log4j-core-2.13.3.jar`
 
 ## VM configuration
 The configuration of the VM should persist even after a shut down. Some configuration details are outlined below.

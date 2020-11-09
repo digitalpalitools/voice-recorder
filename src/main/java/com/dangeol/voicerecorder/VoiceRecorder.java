@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
@@ -25,10 +26,13 @@ public class VoiceRecorder extends ListenerAdapter {
     public static void main(String[] args) {
 
         try {
-            JDABuilder builder = new JDABuilder(AccountType.BOT);
-            builder.setToken(getEnvItem("bot_token"));
-            builder.addEventListeners(new VoiceRecorder());
-            JDA jda = builder.build();
+            JDA jda = JDABuilder.createLight(getEnvItem("bot_token"),
+                    GatewayIntent.GUILD_MESSAGES,
+                    GatewayIntent.DIRECT_MESSAGES,
+                    GatewayIntent.GUILD_VOICE_STATES)
+                    .addEventListeners(new VoiceRecorder())
+                    .setActivity(Activity.playing("https://gitlab.com/sirimangalo/voice-recorder"))
+                    .build();
             SchedulerService schedulerService = new SchedulerService();
             schedulerService.scheduleSetBotActivityEvent(jda);
         } catch (Exception e) {

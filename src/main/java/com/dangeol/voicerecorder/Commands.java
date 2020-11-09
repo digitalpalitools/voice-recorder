@@ -26,6 +26,10 @@ public class Commands {
      * @param event: The event for this command
      */
     public void onRecordCommand(GuildMessageReceivedEvent event) throws Exception {
+        messages.onRecordNotWorking(event.getChannel());
+        return;
+        /* As of Nov. 2020, getVoiceState() always returns null, possibly due to changes
+        in the discord API.
         Member member = event.getMember();
         GuildVoiceState voiceState = member.getVoiceState();
         VoiceChannel channel = voiceState.getChannel();
@@ -33,7 +37,7 @@ public class Commands {
             messages.onUnknownChannelMessage(event.getChannel(), "your voice channel");
             return;
         }
-        connectTo(channel, event);
+        connectTo(channel, event);*/
     }
 
     /**
@@ -70,7 +74,7 @@ public class Commands {
         Guild guild = voiceChannel.getGuild();
         TextChannel textChannel = event.getChannel();
         AudioManager audioManager = guild.getAudioManager();
-        if (audioManager.isConnected() || audioManager.isAttemptingToConnect()) {
+        if (audioManager.isConnected()) {
             messages.onAlreadyConnectedMessage(textChannel, voiceChannel.getName());
             return;
         }
@@ -107,11 +111,12 @@ public class Commands {
         changeBotNickName(event, "");
         event.getGuild().getAudioManager().closeAudioConnection();
         messages.onDisconnectionMessage(event.getChannel());
+        /*
         try {
             uploadutil.uploadMp3(event.getChannel());
         } catch (IOException e) {
             logger.error(e.getMessage());
-        }
+        }*/
     }
 
     /**
