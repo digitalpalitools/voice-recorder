@@ -44,13 +44,14 @@ In the case of a shut down, the VM and subsequently the Docker container need to
 
 Start a Docker container that is driven from the image, and mount the volume “vr_app”:\
 `docker run -p 88:7777 -d --name vr_vol --mount source=vr_app,target=/usr/app [image]`\
-The latest image is (August 2020): `b971f44adff1`
+The latest image is (November 2020): `5baa766a123f`
 
 ## Local development
-Please put the following JAR-file in your JAVA class path: `log4j-core-2.13.3.jar`
+The following JAR-file needs to be in your JAVA class path: `log4j-core-2.13.3.jar`
 
 ## VM configuration
 The configuration of the VM should persist even after a shut down. Some configuration details are outlined below.
+- OS: Debian GNU/Linux 10 (buster)
 - Docker version: 18.06.1-ce
 - A swap space of 1 GB has been allocated in the host. This should be verified by the following command: `sudo swapon --show`
 - `sudo ls /var/lib/docker/volumes/vr_app/_data` to see the app’s files

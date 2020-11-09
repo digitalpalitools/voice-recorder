@@ -10,12 +10,15 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.EnumSet;
 
 public class VoiceRecorder extends ListenerAdapter {
 
@@ -25,13 +28,16 @@ public class VoiceRecorder extends ListenerAdapter {
 
     public static void main(String[] args) {
 
+        EnumSet<GatewayIntent> intents = EnumSet.of(
+                GatewayIntent.GUILD_MESSAGES,
+                GatewayIntent.GUILD_VOICE_STATES
+        );
+
         try {
-            JDA jda = JDABuilder.createLight(getEnvItem("bot_token"),
-                    GatewayIntent.GUILD_MESSAGES,
-                    GatewayIntent.DIRECT_MESSAGES,
-                    GatewayIntent.GUILD_VOICE_STATES)
+            JDA jda = JDABuilder.createDefault(getEnvItem("bot_token"), intents)
                     .addEventListeners(new VoiceRecorder())
                     .setActivity(Activity.playing("https://gitlab.com/sirimangalo/voice-recorder"))
+                    .enableCache(CacheFlag.VOICE_STATE)
                     .build();
             SchedulerService schedulerService = new SchedulerService();
             schedulerService.scheduleSetBotActivityEvent(jda);
