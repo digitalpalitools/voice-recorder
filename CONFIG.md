@@ -10,9 +10,8 @@ Micro machine type with 0.2 vCPU and 0.6 GB of memory, backed by a shared physic
 ### Prerequisites
 
 - Being member of the voicerecorder gcloud project. As of 2020-11-08, these are:
-  - Chris: cxxxg@cxxxp.me (editor)
-  - Sebastian: sxxxl@pxxxo.de (editor)
-  - Daniel: dxxx0@gxxxl.com (owner)
+  - Daniel: dxxx0@gxxxl.com (editor)
+  - Partho: pxxxs@lxxe.com (owner)
 
 - Having the latest [Cloud SDK](https://cloud.google.com/sdk/docs#install_the_latest_cloud_tools_version_cloudsdk_current_version) installed.
 - Alternatively, the [Cloud Shell](https://console.cloud.google.com/home/dashboard?cloudshell=true) can be used.
