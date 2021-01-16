@@ -18,7 +18,7 @@ public class MessageUtil {
                 " will start in 10 seconds."
                 + "\n" + "By unmuting his microphone, the participant consents to an audio tape being made of this " +
                 "session and to this recording being uploaded to the internet. The purpose of this tape is sharing " +
-                "the Dhamma and information concerning Sirimangalo International with interested persons who can't " +
+                "the Dhamma and information regarding Digital Pāli Tools with interested persons who can't " +
                 "attend the meeting. Any participant may initiate the deletion of a recording at any time by " +
                 "writing an E-Mail to " + email + "." + "\n" +  "```";
         textChannel.sendMessage(msg).queue();

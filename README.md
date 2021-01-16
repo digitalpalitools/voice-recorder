@@ -1,5 +1,5 @@
 # VoiceRecorder
-> A simple voice channel recording bot for the Sirimangalo discord server, using the [JDA](https://github.com/DV8FromTheWorld/JDA)
+> A simple voice channel recording bot for the Digital Pāli Tools discord server, using the [JDA](https://github.com/DV8FromTheWorld/JDA)
 > Java wrapper for the Discord API.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->

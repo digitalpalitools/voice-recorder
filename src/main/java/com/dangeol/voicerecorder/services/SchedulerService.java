@@ -66,7 +66,7 @@ public class SchedulerService {
         Runnable task = () -> {
             try {
                 jda.awaitReady();
-                jda.getPresence().setActivity(Activity.playing("https://gitlab.com/sirimangalo/voice-recorder"));
+                jda.getPresence().setActivity(Activity.playing("https://github.com/digitalpalitools/voice-recorder"));
             } catch (InterruptedException e) {
                 logger.error(e.getMessage());
             }

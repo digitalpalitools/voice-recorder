@@ -9,7 +9,7 @@ Micro machine type with 0.2 vCPU and 0.6 GB of memory, backed by a shared physic
 
 ### Prerequisites
 
-- Being member of the voicerecorder gcloud project. As of 2020-11-08, these are:
+- Being member of the voice-recorder gcloud project. As of 2020-11-08, these are:
   - Daniel: dxxx0@gxxxl.com (editor)
   - Partho: pxxxs@lxxe.com (owner)
 

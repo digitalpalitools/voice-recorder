@@ -36,7 +36,7 @@ public class VoiceRecorder extends ListenerAdapter {
         try {
             JDA jda = JDABuilder.createDefault(getEnvItem("bot_token"), intents)
                     .addEventListeners(new VoiceRecorder())
-                    .setActivity(Activity.playing("https://gitlab.com/sirimangalo/voice-recorder"))
+                    .setActivity(Activity.playing("https://github.com/digitalpalitools/voice-recorder"))
                     .enableCache(CacheFlag.VOICE_STATE)
                     .build();
             SchedulerService schedulerService = new SchedulerService();
